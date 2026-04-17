@@ -1,16 +1,18 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'motion/react';
-import { Play } from 'lucide-react';
+import { Play, ArrowRight, Star } from 'lucide-react';
 import { useRef } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import AnimeBackground from './AnimeBackground';
 
-const tags = [
-  { text: '#Innovation', rotate: -6, top: '15%', left: '10%' },
-  { text: '#Scalability', rotate: 8, top: '20%', right: '15%' },
-  { text: '#Security', rotate: -4, bottom: '25%', left: '15%' },
-  { text: '#Performance', rotate: 5, bottom: '30%', right: '10%' },
-  { text: '#Cloud', rotate: -8, top: '50%', left: '5%' },
-  { text: '#AI', rotate: 6, top: '45%', right: '5%' },
+const clientLogos = [
+  { name: 'FutureCorp', icon: '⚡' },
+  { name: 'InnovateX', icon: '💠' },
+  { name: 'GlobalSystems', icon: '🌐' },
+  { name: 'TechFlow', icon: '🌊' },
+  { name: 'MindSync', icon: '🧠' },
 ];
 
 export default function HeroNew() {
@@ -20,109 +22,133 @@ export default function HeroNew() {
     offset: ["start start", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
 
   return (
-    <section ref={ref} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20 bg-white dark:bg-black transition-colors duration-300">
-      {/* Background Video */}
-      <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-10 dark:opacity-20"
-        >
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-white-abstract-technology-network-background-2738-large.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/80 to-white/90 dark:from-gray-950/90 dark:to-black/90" />
+    <section ref={ref} className="relative min-h-screen flex flex-col items-center pt-32 md:pt-48 pb-20 overflow-hidden bg-[#eaeff3] dark:bg-[#231f20] transition-colors duration-300">
+      
+      {/* Brand Badge in Hero Corner */}
+      <div className="absolute top-20 left-12 z-20 hidden lg:block">
+        <div className="flex items-center gap-4 opacity-10 dark:opacity-20 hover:opacity-100 transition-opacity duration-700 cursor-default">
+          <div className="relative w-12 h-12">
+            <Image 
+              src="/logo.png" 
+              alt="Zync Logo" 
+              fill 
+              className="object-contain"
+            />
+          </div>
+          <span className="font-black text-xl tracking-tighter text-gray-900 dark:text-white uppercase transition-colors">
+            ZyncWeb Solutions
+          </span>
+        </div>
       </div>
 
-      {/* Floating Tags */}
-      {tags.map((tag, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: index * 0.1, duration: 0.5 }}
-          className="absolute hidden md:block bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm px-6 py-2 rounded-full shadow-sm text-sm font-semibold text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700 z-10"
-          style={{
-            top: tag.top,
-            left: tag.left,
-            right: tag.right,
-            bottom: tag.bottom,
-            rotate: `${tag.rotate}deg`,
-          }}
-        >
-          {tag.text}
-        </motion.div>
-      ))}
+      {/* Scalient-style Grid Background */}
+      <div className="absolute inset-0 z-0">
+        <AnimeBackground />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[#255ba9]/10 dark:bg-[#255ba9]/5 blur-[120px] rounded-full pointer-events-none" />
+      </div>
 
       {/* Main Content */}
       <motion.div 
-        style={{ y, opacity }}
-        className="relative z-10 text-center max-w-4xl px-6"
+        style={{ opacity }}
+        className="relative z-10 text-center max-w-5xl px-6 w-full"
       >
+        {/* Badge */}
         <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-xs font-black uppercase tracking-widest text-[#3fbfb8] mb-8"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3fbfb8] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#3fbfb8]"></span>
+          </span>
+          Next Generation Studio
+        </motion.div>
+
+        {/* Headline */}
+        <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-gray-900 dark:text-white leading-[0.8] mb-10"
         >
-          <div className="flex justify-center mb-8">
-            <div className="w-20 h-20 rounded-full border-2 border-gray-200 dark:border-gray-700 flex items-center justify-center bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
-               <div className="w-12 h-12 rounded-full border border-gray-300 dark:border-gray-600 flex items-center justify-center">
-                 <div className="w-4 h-4 bg-gray-400 dark:bg-gray-300 rounded-full" />
-               </div>
+          Fueling the<br />
+          <span className="text-gray-400">Next Era.</span>
+        </motion.h1>
+        
+        {/* Description */}
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-xl md:text-2xl text-gray-500 dark:text-gray-400 max-w-3xl mx-auto mb-14 font-medium leading-relaxed"
+        >
+          At Zync, we believe growth is about connecting bold ideas with flawless execution. We help modern brands dominate the digital landscape with purpose and precision.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-24"
+        >
+          <button className="bg-black dark:bg-white text-white dark:text-black px-12 py-6 rounded-2xl font-black text-lg hover:scale-105 transition-transform flex items-center gap-2 group shadow-2xl shadow-blue-500/20" aria-label="Get started with Zync">
+            Get Started <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </button>
+          <Link href="/work" className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white px-12 py-6 rounded-2xl font-black text-lg hover:bg-gray-50 dark:hover:bg-white/10 transition-colors flex items-center gap-2" aria-label="View our case studies">
+            View Work
+          </Link>
+        </motion.div>
+
+        {/* Featured Logos Bar */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-30 grayscale hover:grayscale-0 transition-all duration-500"
+        >
+          {clientLogos.map((client) => (
+            <div key={client.name} className="flex items-center gap-2 font-black text-xl tracking-tighter text-gray-900 dark:text-white">
+              <span className="text-2xl">{client.icon}</span>
+              {client.name}
             </div>
-          </div>
-
-          <h1 className="text-6xl md:text-8xl font-black tracking-tight mb-6 text-gray-900 dark:text-white drop-shadow-sm">
-            ZyncWeb<br />Solutions
-          </h1>
-          
-          <p className="text-lg text-gray-500 dark:text-gray-400 max-w-xl mx-auto mb-10 font-medium">
-            Engineering intelligent digital infrastructure for the modern enterprise. Scalable, secure, and future-proof.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="bg-blue-600 text-white px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20">
-              Get Started <span className="text-xl">→</span>
-            </button>
-            <button className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-900 dark:text-white px-8 py-4 rounded-full font-bold flex items-center gap-2 hover:bg-white dark:hover:bg-gray-700 transition-colors shadow-sm border border-gray-100 dark:border-gray-700">
-              <div className="w-6 h-6 bg-gray-100 dark:bg-gray-600 rounded-full flex items-center justify-center">
-                <Play className="w-3 h-3 fill-gray-900 dark:fill-white" />
-              </div>
-              Watch Video
-            </button>
-          </div>
+          ))}
         </motion.div>
       </motion.div>
 
-      {/* Bottom Features */}
-      <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-12 mt-32 max-w-6xl mx-auto px-6 pb-20 w-full">
-        <div className="text-left">
-          <h3 className="font-bold text-xl mb-3 text-gray-900 dark:text-white">Why choose ZyncWeb?</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-            We are chosen by industry leaders for our technical excellence and commitment to innovation.
-          </p>
-        </div>
-        <div className="text-center">
-          <div className="w-16 h-16 mx-auto mb-4 bg-blue-400/20 rounded-full blur-xl" />
-          <h3 className="font-bold text-lg mb-1 text-gray-900 dark:text-white">Full Development</h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400">End-to-end solutions from architecture to deployment.</p>
-        </div>
-        <div className="text-center">
-          <div className="w-12 h-12 mx-auto mb-4 text-blue-600 flex items-center justify-center">
-             <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-               <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-             </svg>
+      {/* Main Visual Mockup */}
+      <motion.div 
+        style={{ y, scale, willChange: 'transform, opacity' }}
+        className="relative z-10 w-full max-w-7xl px-6 mt-32"
+      >
+        <div className="relative aspect-[16/9] rounded-[2.5rem] overflow-hidden border border-gray-200 dark:border-white/10 bg-white dark:bg-[#231f20] shadow-2xl group">
+          <Image 
+            src="https://picsum.photos/seed/agency/1920/1080" 
+            alt="Studio Showcase" 
+            fill 
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            sizes="(max-width: 1280px) 100vw, 1280px"
+          />
+          {/* Overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          
+          {/* Play Button Overlay */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="w-24 h-24 bg-[#3fbfb8] rounded-full flex items-center justify-center text-white shadow-xl scale-90 group-hover:scale-100 transition-transform">
+              <Play className="w-8 h-8 fill-white" />
+            </div>
           </div>
-          <h3 className="font-bold text-lg mb-1 text-gray-900 dark:text-white">Client Success</h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400">Dedicated to driving measurable growth for our partners.</p>
         </div>
-      </div>
+      </motion.div>
+
     </section>
   );
 }

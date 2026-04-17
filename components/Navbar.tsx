@@ -6,12 +6,13 @@ import { motion } from 'motion/react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useTheme } from '@/components/ThemeProvider';
+import Image from 'next/image';
 
 const navItems = [
   { name: 'Home', path: '/' },
+  { name: 'Work', path: '/work' },
   { name: 'About', path: '/about' },
   { name: 'Services', path: '/services' },
-  { name: 'Process', path: '/process' },
   { name: 'Contact', path: '/contact' },
 ];
 
@@ -37,26 +38,33 @@ export default function Navbar() {
       className={`fixed top-8 left-0 right-0 z-50 px-6 transition-all duration-300`}
     >
       <div className="max-w-5xl mx-auto">
-        <div className={`backdrop-blur-md rounded-full px-6 py-3 flex items-center justify-between shadow-sm transition-all duration-300 ${
+        <div className={`backdrop-blur-md rounded-full px-6 py-3 flex items-center justify-between transition-all duration-300 ${
           scrolled 
-            ? 'bg-white/90 dark:bg-gray-900/90 border border-gray-200 dark:border-gray-800' 
-            : 'bg-white/50 dark:bg-gray-900/50 border border-transparent'
+            ? 'bg-white/90 dark:bg-[#231f20]/90 border border-gray-200 dark:border-white/10 shadow-lg shadow-black/5 dark:shadow-[#3fbfb8]/5' 
+            : 'bg-white/50 dark:bg-[#231f20]/50 border border-transparent'
         }`}>
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">ZW</div>
-            <span className="font-bold text-gray-800 dark:text-white">ZyncWeb</span>
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative w-10 h-10 group-hover:rotate-12 transition-transform duration-500">
+              <Image 
+                src="/logo.png" 
+                alt="ZYNC Logo" 
+                fill 
+                className="object-contain"
+                priority
+              />
+            </div>
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-10">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 href={item.path}
-                className={`text-sm font-medium transition-colors hover:text-blue-500 dark:hover:text-blue-400 ${
+                className={`text-xs font-black uppercase tracking-widest transition-all hover:text-[#3fbfb8] ${
                   pathname === item.path 
-                    ? 'bg-white dark:bg-gray-800 px-4 py-1.5 rounded-full shadow-sm text-gray-900 dark:text-white' 
-                    : 'text-gray-600 dark:text-gray-300'
+                    ? 'text-[#3fbfb8]' 
+                    : 'text-gray-500 dark:text-gray-400'
                 }`}
               >
                 {item.name}
@@ -64,19 +72,19 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-6">
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-600 dark:text-gray-300"
+              className="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-[#3fbfb8] dark:hover:bg-[#3fbfb8] hover:text-white transition-all text-gray-600 dark:text-gray-300"
               aria-label="Toggle theme"
             >
-              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
             </button>
 
             {/* Contact Button */}
-            <button className="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-2 rounded-full text-sm font-medium flex items-center gap-2 hover:bg-gray-800 dark:hover:bg-gray-100 transition">
-              <span className="w-2 h-2 bg-blue-400 rotate-45"></span> Contact
+            <button className="bg-black dark:bg-[#255ba9] text-white dark:text-white px-8 py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:scale-105 transition-transform">
+              Start Project
             </button>
           </div>
 
@@ -85,12 +93,14 @@ export default function Navbar() {
              <button
               onClick={toggleTheme}
               className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-600 dark:text-gray-300"
+              aria-label="Toggle theme"
             >
               {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
             </button>
             <button
               className="text-gray-900 dark:text-white p-2"
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Close menu" : "Open menu"}
             >
               {isOpen ? <X /> : <Menu />}
             </button>
@@ -103,7 +113,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-20 left-6 right-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-6 md:hidden shadow-xl"
+            className="absolute top-20 left-6 right-6 bg-[#eaeff3] dark:bg-[#231f20] border border-gray-200 dark:border-white/10 rounded-2xl p-6 md:hidden shadow-xl"
           >
             <div className="flex flex-col gap-4">
               {navItems.map((item) => (
@@ -111,12 +121,12 @@ export default function Navbar() {
                   key={item.path}
                   href={item.path}
                   onClick={() => setIsOpen(false)}
-                  className="text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-blue-500"
+                  className="text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-[#3fbfb8]"
                 >
                   {item.name}
                 </Link>
               ))}
-              <button className="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-3 rounded-full text-sm font-medium w-full mt-2">
+              <button className="bg-[#231f20] dark:bg-[#3fbfb8] text-white dark:text-black px-6 py-3 rounded-full text-sm font-medium w-full mt-2">
                 Contact Us
               </button>
             </div>
