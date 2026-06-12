@@ -10,11 +10,34 @@ View your app in AI Studio: https://ai.studio/apps/f2012dc2-130b-489e-9619-95879
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
-
+**Prerequisites:** Node.js (recommended LTS)
 
 1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+
+   ```bash
+   npm install
+   ```
+
+2. Create `.env.local` from `.env.example` and set your secrets:
+
+   ```bash
+   cp .env.example .env.local
+   # edit .env.local and add your GEMINI_API_KEY
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Build for production:
+
+   ```bash
+   npm run build
+   npm run start
+   ```
+
+Notes:
+- This project uses the Next.js App Router (the `app/` directory).
+- Tailwind CSS configuration is in `tailwind.config.cjs`.
